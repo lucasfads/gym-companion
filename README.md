@@ -28,3 +28,39 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+**Generating Prisma Client**
+
+```bash
+npx prisma generate --schema ./prisma/schema.prisma
+```
+
+### 🦾 Development
+
+To start the project locally on development, run:
+
+```bash
+npm run dev
+```
+
+### Create a postgress database example
+
+Download postgress docker image:
+
+```bash
+docker pull postgres
+```
+
+Create a Container from the PostgreSQL Image:
+
+```bash
+docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+```
+
+Make sure everything is OK with the container:
+
+```bash
+docker ps
+```
+
+Replace the environment variable: **DATABASE_URL** with new values.
