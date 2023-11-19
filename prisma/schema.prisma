@@ -6,3 +6,15 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Workout {
+  id		Int     	@id @default(autoincrement())
+  createdAt DateTime	@default(now())
+  program 	Program[]
+}
+
+model Program {
+  id        Int		@id @default(autoincrement())
+  workoutId Int
+  workout   Workout	@relation(fields: [workoutId], references: [id], onDelete: Cascade)
+}

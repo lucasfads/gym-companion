@@ -54,7 +54,7 @@ docker pull postgres
 Create a Container from the PostgreSQL Image:
 
 ```bash
-docker run --name postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+docker run --name gym-compation-db -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
 ```
 
 Make sure everything is OK with the container:
