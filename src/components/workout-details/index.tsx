@@ -2,20 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
-import { openDatabase } from '@/lib/indexed-db';
+import { openDatabase, fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
 import ProgramsList from '@/src/components/programs-list';
-
-const fetchWorkoutDetailsFromDB = async (id: number | string) => {
-	const db = await openDatabase();
-	return new Promise((resolve, reject) => {
-	  const transaction = db.transaction(["workouts"], "readonly");
-	  const store = transaction.objectStore("workouts");
-	  const request = store.get(parseInt(id, 10));
-  
-	  request.onsuccess = () => resolve(request.result);
-	  request.onerror = () => reject(request.error);
-	});
-}
 
 const WorkoutDetails: React.FC = () => {
 	const [workout, setWorkout] = useState<Workout>();

@@ -88,3 +88,55 @@ export const removeWorkout = (db, workoutId : number) => {
 	  console.log("Erro ao remover workout ao banco de dados", event);
 	};
 }
+export const fetchWorkoutDetailsFromDB = async (id: number | string) => {
+	const db = await openDatabase();
+	return new Promise((resolve, reject) => {
+	  const transaction = db.transaction(["workouts"], "readonly");
+	  const store = transaction.objectStore("workouts");
+	  const request = store.get(parseInt(id, 10));
+  
+	  request.onsuccess = () => resolve(request.result);
+	  request.onerror = () => reject(request.error);
+	});
+}
+
+export const addPrograms = async (workoutId : number, newProgram : Program) => {
+    const db = await openDatabase();
+    const transaction = db.transaction(["workouts"], "readwrite");
+    const store = transaction.objectStore("workouts");
+
+    const workoutRequest = store.get(workoutId);
+
+    workoutRequest.onsuccess = () => {
+        const workout = workoutRequest.result;
+        if (workout) {
+            workout.programs.push(newProgram);
+            store.put(workout);
+        }
+    };
+
+    workoutRequest.onerror = (event) => {
+        console.log("Erro ao buscar workout", event.target.error);
+    };
+};
+
+export const removeProgram = async (workoutId : number, programId : number) => {
+    const db = await openDatabase();
+    const transaction = db.transaction(["workouts"], "readwrite");
+    const store = transaction.objectStore("workouts");
+
+    const workoutRequest = store.get(workoutId);
+
+    workoutRequest.onsuccess = () => {
+        const workout = workoutRequest.result;
+        if (workout) {
+            const updatedPrograms = workout.programs.filter(program => program.id !== programId);
+            workout.programs = updatedPrograms;
+            store.put(workout);
+        }
+    };
+
+    workoutRequest.onerror = (event) => {
+        console.log("Erro ao buscar workout", event.target.error);
+    };
+};

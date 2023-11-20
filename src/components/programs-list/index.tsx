@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { Program } from '@/types';
-import { addWorkout, removeWorkout, openDatabase } from '@/lib/indexed-db'
+import { addPrograms, removeProgram, openDatabase } from '@/lib/indexed-db'
 import { Link } from 'react-router-dom';
 
 const getWorkoutById = async (db, id) => {
@@ -24,20 +24,20 @@ const ProgramsList: React.FC<ProgramsListProps> = ( {workoutId} ) => {
     const [error, setError] = useState(null);
 
 	const handleAddProgram = () => {
-		// Encontrar o ID máximo atual no array de programas
 		const maxId = programs.reduce((max, p) => p.id > max ? p.id : max, 0);
 	
-		// Criar um novo Program
 		const newProgram = {
 			id: maxId + 1
 		};
+
+		addPrograms(workoutId, newProgram);
 	
 		setPrograms([...programs, newProgram]);
 	};
 
 	const handleRemoveProgram = (id) => {
 		const updatedPrograms = programs.filter(program => program.id !== id);
-	
+		removeProgram(workoutId, id)
 		setPrograms(updatedPrograms);
 	};
 
