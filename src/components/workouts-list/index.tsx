@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
 import { addWorkout, removeWorkout, openDatabase } from '@/lib/indexed-db'
+import { Link } from 'react-router-dom';
 
-function getAllWorkouts(db) {
+const getAllWorkouts = (db) => {
 	return new Promise((resolve, reject) => {
 	  const transaction = db.transaction(["workouts"], "readonly");
 	  const store = transaction.objectStore("workouts");
@@ -12,8 +13,7 @@ function getAllWorkouts(db) {
 	  request.onsuccess = () => resolve(request.result);
 	  request.onerror = () => reject(request.error);
 	});
-  }
-  
+}
 
 const WorkoutsList: React.FC = () => {
     const [workouts, setWorkouts] = useState([]);
@@ -75,7 +75,10 @@ const WorkoutsList: React.FC = () => {
 			<button onClick={handleAddWorkout}>ADD</button>
 			<div className={styles.workouts}>
 				{workouts.map(workout => (
-					<div key={workout.id}>{workout.id}<button onClick={() => handleRemoveWorkout(workout.id)}>REMOVE</button></div>
+					<div key={workout.id}>
+						<Link to={`/workout/${workout.id}`}>{workout.id}</Link>
+						<button onClick={() => handleRemoveWorkout(workout.id)}>REMOVE</button>
+					</div>
 				))}
 			</div>
 		</div>
