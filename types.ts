@@ -6,3 +6,14 @@ export interface Workout {
 export interface Program {
 	number: number;
 }
+
+export interface Exercise {
+    name: string;
+    reps: number;
+	records: Record[];
+}
+
+export interface Record {
+    date: Date;
+    maxLoad: number;
+}

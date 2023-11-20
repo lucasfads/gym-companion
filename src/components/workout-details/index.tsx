@@ -7,16 +7,16 @@ import ProgramsList from '@/src/components/programs-list';
 
 const WorkoutDetails: React.FC = () => {
 	const [workout, setWorkout] = useState<Workout>();
-    const { id } = useParams();
+    const { workoutId } = useParams();
 
 	useEffect(() => {
         const fetchWorkoutDetails = async () => {
-			const data = await fetchWorkoutDetailsFromDB(id);
+			const data = await fetchWorkoutDetailsFromDB(workoutId);
             setWorkout(data);
         };
 
         fetchWorkoutDetails();
-    }, [id]);
+    }, [workoutId]);
 
     if (!workout) {
         return <div>Carregando...</div>;
