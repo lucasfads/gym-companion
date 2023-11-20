@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
 import { openDatabase } from '@/lib/indexed-db';
+import ProgramsList from '@/src/components/programs-list';
 
 const fetchWorkoutDetailsFromDB = async (id: number | string) => {
 	const db = await openDatabase();
@@ -36,7 +37,7 @@ const WorkoutDetails: React.FC = () => {
     return (
         <div>
             <h1>{workout.id}</h1>
-            {/* Mais detalhes do workout */}
+            <ProgramsList workoutId={workout.id}></ProgramsList>
         </div>
     );
 

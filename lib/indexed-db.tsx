@@ -1,3 +1,5 @@
+import { Workout, Program } from "@/types";
+
 let db;
 const request = window.indexedDB.open("myDatabase", 1);
 
@@ -42,6 +44,7 @@ export const openDatabase = () => {
 export const addWorkout = (db) => {
 	const newWorkout = {
 		id: Date.now(),
+		programs: []
 	};
 	
 	const transaction = db.transaction(["workouts"], "readwrite");
@@ -71,7 +74,7 @@ export const getWorkout = (id) => {
 	};
 }
 
-export const removeWorkout = (db, workoutId) => {
+export const removeWorkout = (db, workoutId : number) => {
 	const transaction = db.transaction(["workouts"], "readwrite");
 	const store = transaction.objectStore("workouts");
 	
