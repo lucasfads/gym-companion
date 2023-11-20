@@ -5,6 +5,7 @@ export interface Workout {
 
 export interface Program {
 	number: number;
+	exercises: Exercise[];
 }
 
 export interface Exercise {

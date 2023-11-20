@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
 import { openDatabase, fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
-import ProgramsList from '@/src/components/programs-list';
 
-const WorkoutDetails: React.FC = () => {
+const ProgramDetails: React.FC = () => {
 	const [workout, setWorkout] = useState<Workout>();
     const { workoutId, programId } = useParams();
 
@@ -21,7 +20,7 @@ const WorkoutDetails: React.FC = () => {
 
     // if (!workout) {
     //     return <div>Carregando...</div>;
-    // }
+    //
 
     return (
         <div>
@@ -35,4 +34,4 @@ const WorkoutDetails: React.FC = () => {
 
 }
 
-export default WorkoutDetails;
+export default ProgramDetails;
