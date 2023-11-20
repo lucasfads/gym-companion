@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
-import { addWorkout, openDatabase } from '@/lib/indexed-db'
+import { addWorkout, removeWorkout, openDatabase } from '@/lib/indexed-db'
 
 function getAllWorkouts(db) {
 	return new Promise((resolve, reject) => {
@@ -21,14 +21,27 @@ const WorkoutsList: React.FC = () => {
 
 	const handleAddWorkout = async () => {
 		try {
-			const db = await openDatabase(); // Abre a conexão com o IndexedDB
-			const newWorkout = {/* dados do novo workout */}; // Substitua isso pelos dados reais do workout
-			await addWorkout(db); // Chama addWorkout passando a conexão e o novo workout
-			// Recarrega os workouts após a adição
+			const db = await openDatabase();
+			const newWorkout = {/* dados do novo workout */};
+			await addWorkout(db);
+			
 			const allWorkouts = await getAllWorkouts(db);
 			setWorkouts(allWorkouts);
 		} catch (err) {
 			console.error("Erro ao adicionar workout", err);
+			setError(err);
+		}
+	};
+
+	const handleRemoveWorkout = async (workoutId) => {
+		try {
+			const db = await openDatabase();
+			await removeWorkout(db, workoutId);
+			
+			const allWorkouts = await getAllWorkouts(db);
+			setWorkouts(allWorkouts);
+		} catch (err) {
+			console.error("Erro ao remover workout", err);
 			setError(err);
 		}
 	};
@@ -62,7 +75,7 @@ const WorkoutsList: React.FC = () => {
 			<button onClick={handleAddWorkout}>ADD</button>
 			<div className={styles.workouts}>
 				{workouts.map(workout => (
-					<div key={workout.id}>{workout.id}</div>
+					<div key={workout.id}>{workout.id}<button onClick={() => handleRemoveWorkout(workout.id)}>REMOVE</button></div>
 				))}
 			</div>
 		</div>

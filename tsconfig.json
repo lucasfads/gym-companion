@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    "baseUrl": "./", // Isso deve ser a raiz do seu projeto
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./*"]
     }
