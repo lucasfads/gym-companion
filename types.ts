@@ -4,7 +4,7 @@ export interface Workout {
 }
 
 export interface Program {
-	number: number;
+	id: number;
 	exercises: Exercise[];
 }
 

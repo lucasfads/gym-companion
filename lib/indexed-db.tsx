@@ -140,3 +140,35 @@ export const removeProgram = async (workoutId : number, programId : number) => {
         console.log("Erro ao buscar workout", event.target.error);
     };
 };
+
+export const updateProgramInDB = async (workoutId : number, updatedProgram : Program) => {
+  const db = await openDatabase();
+  const transaction = db.transaction(["workouts"], "readwrite");
+  const store = transaction.objectStore("workouts");
+
+  const workoutRequest = store.get(workoutId);
+
+  workoutRequest.onsuccess = () => {
+      const workout = workoutRequest.result;
+      if (workout) {
+          const programIndex = workout.programs.findIndex(program => program.id === updatedProgram.id);
+          if (programIndex !== -1) {
+              workout.programs[programIndex] = updatedProgram;
+          }
+          store.put(workout);
+      }
+  };
+
+  workoutRequest.onerror = (event) => {
+      console.log("Erro ao buscar workout", event.target.error);
+  };
+
+  transaction.oncomplete = () => {
+      console.log("Programa atualizado com sucesso no IndexedDB.");
+  };
+
+  transaction.onerror = (event) => {
+      console.log("Erro ao atualizar programa no IndexedDB", event.target.error);
+  };
+};
+

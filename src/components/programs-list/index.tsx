@@ -26,8 +26,9 @@ const ProgramsList: React.FC<ProgramsListProps> = ( {workoutId} ) => {
 	const handleAddProgram = () => {
 		const maxId = programs.reduce((max, p) => p.id > max ? p.id : max, 0);
 	
-		const newProgram = {
-			id: maxId + 1
+		const newProgram : Program = {
+			id: maxId + 1,
+			exercises: []
 		};
 
 		addPrograms(workoutId, newProgram);
