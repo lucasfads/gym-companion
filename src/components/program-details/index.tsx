@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout, Program } from '@/types';
 import { openDatabase, updateProgramInDB, fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
+import RecordsGraph from '@/src/components/records-graph';
 
 const ProgramDetails = () => {
     const { workoutId, programId } = useParams();
@@ -119,6 +120,13 @@ const ProgramDetails = () => {
         return <div>Carregando detalhes do programa...</div>;
     }
 
+    const exerciseRecords = [
+        { date: '2021-01-01', maxLoad: 100 },
+        { date: '2021-02-01', maxLoad: 110 },
+        { date: '2021-03-01', maxLoad: 105 },
+    ];
+
+
     return (
         <div>
             <h1>Programa {program.number}</h1>
@@ -135,6 +143,7 @@ const ProgramDetails = () => {
                             <button onClick={() => handleRemoveRecord(exercise.name, record.date)}>Remover Registro</button>
                         </div>
                     ))}
+                    <RecordsGraph records={exerciseRecords} ></RecordsGraph>
                     <button onClick={() => handleAddRecord(exercise.name)}>Add Registro</button>
                 </div>
             ))}
