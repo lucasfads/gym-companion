@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
+import { Workout } from '@/types';
 import { addWorkout, openDatabase } from '@/lib/indexed-db'
 
 function getAllWorkouts(db) {
@@ -17,6 +18,21 @@ function getAllWorkouts(db) {
 const WorkoutsList: React.FC = () => {
     const [workouts, setWorkouts] = useState([]);
     const [error, setError] = useState(null);
+
+	const handleAddWorkout = async () => {
+		try {
+			const db = await openDatabase(); // Abre a conexão com o IndexedDB
+			const newWorkout = {/* dados do novo workout */}; // Substitua isso pelos dados reais do workout
+			await addWorkout(db); // Chama addWorkout passando a conexão e o novo workout
+			// Recarrega os workouts após a adição
+			const allWorkouts = await getAllWorkouts(db);
+			setWorkouts(allWorkouts);
+		} catch (err) {
+			console.error("Erro ao adicionar workout", err);
+			setError(err);
+		}
+	};
+	
 
     useEffect(() => {
         const fetchWorkouts = async () => {
@@ -38,15 +54,18 @@ const WorkoutsList: React.FC = () => {
     }
 
     if (!workouts || workouts.length === 0) {
-        return <div>Nenhum workout encontrado.</div>;
+        return <div>Nenhum workout encontrado.<button onClick={handleAddWorkout}>ADD</button></div>;
     }
 
     return (
-        <div className={styles.workouts}>
-            {workouts.map(workout => (
-                <div key={workout.id}>{/* Renderize seus workouts aqui */}</div>
-            ))}
-        </div>
+		<div>
+			<button onClick={handleAddWorkout}>ADD</button>
+			<div className={styles.workouts}>
+				{workouts.map(workout => (
+					<div key={workout.id}>{workout.id}</div>
+				))}
+			</div>
+		</div>
     );
 }
 
