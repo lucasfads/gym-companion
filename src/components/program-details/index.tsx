@@ -120,33 +120,34 @@ const ProgramDetails = () => {
         return <div>Carregando detalhes do programa...</div>;
     }
 
-    const exerciseRecords = [
-        { date: '2021-01-01', maxLoad: 100 },
-        { date: '2021-02-01', maxLoad: 110 },
-        { date: '2021-03-01', maxLoad: 105 },
-    ];
-
-
     return (
         <div>
             <h1>Programa {program.number}</h1>
             <button onClick={handleAddExercise}>Adicionar Exercício</button>
-            {program.exercises.map((exercise, index) => (
-                <div key={index}>
-                    <h2>{exercise.name}</h2>
-                    <p>Reps: {exercise.reps}</p>
-                    <button onClick={() => handleRemoveExercise(exercise.name)}>Remover Exercício</button>
-                    {exercise.records.map((record, recordIndex) => (
-                        <div key={recordIndex}>
-                            <p>Data: {record.date.toLocaleDateString()}</p>
-                            <p>Carga Máxima: {record.maxLoad} kg</p>
-                            <button onClick={() => handleRemoveRecord(exercise.name, record.date)}>Remover Registro</button>
-                        </div>
-                    ))}
-                    <RecordsGraph records={exerciseRecords} ></RecordsGraph>
-                    <button onClick={() => handleAddRecord(exercise.name)}>Add Registro</button>
-                </div>
-            ))}
+            {program.exercises.map((exercise, index) => {
+                const exerciseRecords = exercise.records.map(record => {
+                    return {
+                        date: record.date.toLocaleDateString(), // Converte a data para string
+                        maxLoad: record.maxLoad
+                    };
+                });
+                return(
+                    <div key={index}>
+                        <h2>{exercise.name}</h2>
+                        <p>Reps: {exercise.reps}</p>
+                        <button onClick={() => handleRemoveExercise(exercise.name)}>Remover Exercício</button>
+                        {exercise.records.map((record, recordIndex) => (
+                            <div key={recordIndex}>
+                                <p>Data: {record.date.toLocaleDateString()}</p>
+                                <p>Carga Máxima: {record.maxLoad} kg</p>
+                                <button onClick={() => handleRemoveRecord(exercise.name, record.date)}>Remover Registro</button>
+                            </div>
+                        ))}
+                        <RecordsGraph records={exerciseRecords} ></RecordsGraph>
+                        <button onClick={() => handleAddRecord(exercise.name)}>Add Registro</button>
+                    </div>
+                )}
+            )}
         </div>
     );
 };
