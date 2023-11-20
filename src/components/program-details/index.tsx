@@ -21,8 +21,6 @@ const ProgramDetails = () => {
                 console.error("Erro ao buscar os detalhes do programa", err);
             }
         };
-        
-
         fetchProgramDetails();
     }, [workoutId, programId]);
 
@@ -42,7 +40,7 @@ const ProgramDetails = () => {
         const newExercise = {
             name: exerciseName,
             reps: reps,
-            records: [] // Inicia com um array vazio
+            records: []
         };
         
         const updatedExercises = [...program.exercises, newExercise];
@@ -66,16 +64,61 @@ const ProgramDetails = () => {
     };
     
 
-    const handleAddRecord = (exerciseName, newRecord) => {
-        // Lógica para adicionar um novo registro a um exercício
+    const handleAddRecord = (exerciseName) => {
+        const date = new Date();
+        
+        const maxLoadString = prompt("Digite a carga máxima (kg):");
+        const maxLoad = parseFloat(maxLoadString);
+        if (isNaN(maxLoad) || maxLoad <= 0) {
+            alert("Carga máxima inválida.");
+            return;
+        }
+    
+        const newRecord = {
+            date: date,
+            maxLoad: maxLoad
+        };
+    
+        const updatedExercises = program.exercises.map(exercise => {
+            if (exercise.name === exerciseName) {
+                return { ...exercise, records: [...exercise.records, newRecord] };
+            }
+            return exercise;
+        });
+
+        const updatedProgram = { ...program, exercises: updatedExercises };
+        
+        setProgram(updatedProgram);
+        
+        updateProgramInDB(parseInt(workoutId, 10), updatedProgram);        
     };
+    
 
     const handleRemoveRecord = (exerciseName, recordDate) => {
-        // Lógica para remover um registro de um exercício
+        const dateToRemove = typeof recordDate === 'string' ? new Date(recordDate) : recordDate;
+    
+        const updatedExercises = program.exercises.map(exercise => {
+            if (exercise.name === exerciseName) {
+                const updatedRecords = exercise.records.filter(record => 
+                    record.date.getTime() !== dateToRemove.getTime()
+                );
+                return { ...exercise, records: updatedRecords };
+            }
+            return exercise;
+        });
+    
+        const updatedProgram = { ...program, exercises: updatedExercises };
+        
+        setProgram(updatedProgram);
+        
+        updateProgramInDB(parseInt(workoutId, 10), updatedProgram);
     };
+    
+
     if (!program) {
         return <div>Carregando detalhes do programa...</div>;
     }
+
     return (
         <div>
             <h1>Programa {program.number}</h1>
@@ -85,17 +128,14 @@ const ProgramDetails = () => {
                     <h2>{exercise.name}</h2>
                     <p>Reps: {exercise.reps}</p>
                     <button onClick={() => handleRemoveExercise(exercise.name)}>Remover Exercício</button>
-                    {/* Listar registros */}
                     {exercise.records.map((record, recordIndex) => (
                         <div key={recordIndex}>
                             <p>Data: {record.date.toLocaleDateString()}</p>
                             <p>Carga Máxima: {record.maxLoad} kg</p>
-                            {/* Botão para remover um registro */}
                             <button onClick={() => handleRemoveRecord(exercise.name, record.date)}>Remover Registro</button>
                         </div>
                     ))}
-                    {/* Botão para adicionar um novo registro */}
-                    {/* (Pode ser um formulário ou um modal para capturar os detalhes do novo registro) */}
+                    <button onClick={() => handleAddRecord(exercise.name)}>Add Registro</button>
                 </div>
             ))}
         </div>
