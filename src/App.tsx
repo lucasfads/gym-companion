@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 
-import WorkoutsList from './components/workouts'
+import WorkoutsList from '@/src/components/workouts'
 
 function App() {
 

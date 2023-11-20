@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
-
+import prismadb from '@/lib/prismadb';
 
 const WorkoutsList: React.FC = () => {
 	
