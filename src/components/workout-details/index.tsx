@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
-import { addWorkout, removeWorkout, openDatabase } from '@/lib/indexed-db'
+import { openDatabase } from '@/lib/indexed-db';
 
-const fetchWorkoutDetailsFromDB = async (id) => {
+const fetchWorkoutDetailsFromDB = async (id: number | string) => {
 	const db = await openDatabase();
 	return new Promise((resolve, reject) => {
 	  const transaction = db.transaction(["workouts"], "readonly");
@@ -17,8 +17,8 @@ const fetchWorkoutDetailsFromDB = async (id) => {
 }
 
 const WorkoutDetails: React.FC = () => {
-	const [workout, setWorkout] = useState([]);
-    const { id } = useParams(); // Obtém o id da URL
+	const [workout, setWorkout] = useState<Workout>();
+    const { id } = useParams();
 
 	useEffect(() => {
         const fetchWorkoutDetails = async () => {

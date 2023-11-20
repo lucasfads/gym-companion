@@ -16,13 +16,12 @@ const getAllWorkouts = (db) => {
 }
 
 const WorkoutsList: React.FC = () => {
-    const [workouts, setWorkouts] = useState([]);
+    const [workouts, setWorkouts] = useState<Workout[]>([]);
     const [error, setError] = useState(null);
 
 	const handleAddWorkout = async () => {
 		try {
 			const db = await openDatabase();
-			const newWorkout = {/* dados do novo workout */};
 			await addWorkout(db);
 			
 			const allWorkouts = await getAllWorkouts(db);
@@ -33,7 +32,7 @@ const WorkoutsList: React.FC = () => {
 		}
 	};
 
-	const handleRemoveWorkout = async (workoutId) => {
+	const handleRemoveWorkout = async (workoutId : number) => {
 		try {
 			const db = await openDatabase();
 			await removeWorkout(db, workoutId);
@@ -50,7 +49,7 @@ const WorkoutsList: React.FC = () => {
     useEffect(() => {
         const fetchWorkouts = async () => {
             try {
-                const db = await openDatabase(); // Supõe-se que essa função abre o IndexedDB
+                const db = await openDatabase();
                 const allWorkouts = await getAllWorkouts(db);
                 setWorkouts(allWorkouts);
             } catch (err) {
@@ -74,7 +73,7 @@ const WorkoutsList: React.FC = () => {
 		<div>
 			<button onClick={handleAddWorkout}>ADD</button>
 			<div className={styles.workouts}>
-				{workouts.map(workout => (
+				{workouts.map((workout: Workout) => (
 					<div key={workout.id}>
 						<Link to={`/workout/${workout.id}`}>{workout.id}</Link>
 						<button onClick={() => handleRemoveWorkout(workout.id)}>REMOVE</button>
