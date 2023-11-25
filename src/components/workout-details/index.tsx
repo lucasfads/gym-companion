@@ -20,7 +20,7 @@ const WorkoutDetails: React.FC = () => {
     }, [workoutId]);
 
     if (!workout) {
-        return <div>Carregando...</div>;
+        return <div>Loading...</div>;
     }
 
     return (

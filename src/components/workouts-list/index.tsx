@@ -28,7 +28,7 @@ const WorkoutsList: React.FC = () => {
 			const allWorkouts = await getAllWorkouts(db);
 			setWorkouts(allWorkouts);
 		} catch (err) {
-			console.error("Erro ao adicionar workout", err);
+			console.error("Error adding workout", err);
 			setError(err);
 		}
 	};
@@ -41,7 +41,7 @@ const WorkoutsList: React.FC = () => {
 			const allWorkouts = await getAllWorkouts(db);
 			setWorkouts(allWorkouts);
 		} catch (err) {
-			console.error("Erro ao remover workout", err);
+			console.error("Error removing workout", err);
 			setError(err);
 		}
 	};
@@ -63,11 +63,11 @@ const WorkoutsList: React.FC = () => {
     }, []);
 
     if (error) {
-        return <div>Erro ao carregar workouts.</div>;
+        return <div>Error loading workouts.</div>;
     }
 
     if (!workouts || workouts.length === 0) {
-        return <div>Nenhum workout encontrado.<button onClick={handleAddWorkout}>ADD</button></div>;
+        return <div>No workout found.<button onClick={handleAddWorkout}>ADD</button></div>;
     }
 
     return (
