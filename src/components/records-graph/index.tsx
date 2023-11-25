@@ -5,11 +5,10 @@ const CustomDot = (props) => {
     const { cx, cy, payload, onRemoveRecord, exerciseName } = props;
 
     const handleClick = () => {
-        console.log(payload)
         onRemoveRecord(exerciseName, payload.id);
     };
 
-    return <Dot cx={cx} cy={cy} r={8} onClick={handleClick} />;
+    return <Dot cx={cx} cy={cy} r={8} fill='red' onClick={handleClick} />;
 };
 
 

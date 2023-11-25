@@ -134,13 +134,13 @@ const ProgramDetails = () => {
                         <h2>{exercise.name}</h2>
                         <p>Reps: {exercise.reps}</p>
                         <button onClick={() => handleRemoveExercise(exercise.name)}>Remove Exercise</button>
-                        {exercise.records.map((record, recordIndex) => (
+                        {/* {exercise.records.map((record, recordIndex) => (
                             <div key={recordIndex}>
                                 <p>Date: {record.date.toLocaleDateString()}</p>
                                 <p>Maximum Load: {record.maxLoad} kg</p>
                                 <button onClick={() => handleRemoveRecord(exercise.name, record.id)}>Remove Record</button>
                             </div>
-                        ))}
+                        ))} */}
                         <RecordsGraph
                             records={exerciseRecords}
                             onRemoveRecord={handleRemoveRecord}
