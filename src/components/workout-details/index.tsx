@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
-import { openDatabase, fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
+import { fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
 import ProgramsList from '@/src/components/programs-list';
+import { formatTimestamp } from '@/lib/utils';
 
 const WorkoutDetails: React.FC = () => {
 	const [workout, setWorkout] = useState<Workout>();
@@ -24,7 +25,7 @@ const WorkoutDetails: React.FC = () => {
 
     return (
         <div>
-            <h1>{workout.id}</h1>
+            <h1>Workout started on {formatTimestamp(workout.id)}</h1>
             <ProgramsList workoutId={workout.id}></ProgramsList>
         </div>
     );
