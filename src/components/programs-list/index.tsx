@@ -51,10 +51,10 @@ const ProgramsList: React.FC<ProgramsListProps> = ( {workoutId} ) => {
 				if (workout) {
 					setPrograms(workout.programs);
 				} else {
-					console.log("Workout não encontrado");
+					console.log("Workout not found");
 				}
 			} catch (err) {
-				console.log("Erro ao buscar programs", err);
+				console.log("Error searching for programs", err);
 				setError(err);
 			}
 		};
@@ -64,11 +64,11 @@ const ProgramsList: React.FC<ProgramsListProps> = ( {workoutId} ) => {
     }, []);
 
     if (error) {
-        return <div>Erro ao carregar programs.</div>;
+        return <div>Error loading programs.</div>;
     }
 
     if (!programs || programs.length === 0) {
-        return <div>Nenhum program encontrado.<button onClick={handleAddProgram}>ADD</button></div>;
+        return <div>No program found.<button onClick={handleAddProgram}>ADD</button></div>;
     }
 
     return (

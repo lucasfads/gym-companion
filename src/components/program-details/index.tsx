@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout, Program } from '@/types';
-import { openDatabase, updateProgramInDB, fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
+import { updateProgramInDB, fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
 import RecordsGraph from '@/src/components/records-graph';
 
 const ProgramDetails = () => {
@@ -19,22 +19,22 @@ const ProgramDetails = () => {
                 const programData = workoutData.programs.find(program => program.id === parseInt(programId, 10));
                 setProgram(programData);
             } catch (err) {
-                console.error("Erro ao buscar os detalhes do programa", err);
+                console.error("Error searching for the program details", err);
             }
         };
         fetchProgramDetails();
     }, [workoutId, programId]);
 
     const handleAddExercise = async () => {
-        const exerciseName = prompt("Digite o nome do exercício:");
+        const exerciseName = prompt("Enter the name of the exercise:");
         if (!exerciseName) {
-            alert("Nome do exercício é obrigatório.");
+            alert("The exercise name is required.");
             return;
         }
 
-        const reps = prompt("Digite o número de repetições:");
+        const reps = prompt("Enter the number of reps:");
         if (!reps) {
-            alert("Número de repetições inválido.");
+            alert("Invalid number of reps.");
             return;
         }
 
@@ -68,10 +68,10 @@ const ProgramDetails = () => {
     const handleAddRecord = (exerciseName) => {
         const date = new Date();
         
-        const maxLoadString = prompt("Digite a carga máxima (kg):");
+        const maxLoadString = prompt("Enter the maximum load (kg):");
         const maxLoad = parseFloat(maxLoadString);
         if (isNaN(maxLoad) || maxLoad <= 0) {
-            alert("Carga máxima inválida.");
+            alert("Invalid maximum load.");
             return;
         }
     
@@ -117,13 +117,13 @@ const ProgramDetails = () => {
     
 
     if (!program) {
-        return <div>Carregando detalhes do programa...</div>;
+        return <div>Loading program details...</div>;
     }
 
     return (
         <div>
-            <h1>Programa {program.number}</h1>
-            <button onClick={handleAddExercise}>Adicionar Exercício</button>
+            <h1>Program {program.id}</h1>
+            <button onClick={handleAddExercise}>Add Exercise</button>
             {program.exercises.map((exercise, index) => {
                 const exerciseRecords = exercise.records.map(record => {
                     return {
@@ -136,16 +136,16 @@ const ProgramDetails = () => {
                     <div key={index}>
                         <h2>{exercise.name}</h2>
                         <p>Reps: {exercise.reps}</p>
-                        <button onClick={() => handleRemoveExercise(exercise.name)}>Remover Exercício</button>
+                        <button onClick={() => handleRemoveExercise(exercise.name)}>Remove Exercise</button>
                         {exercise.records.map((record, recordIndex) => (
                             <div key={recordIndex}>
-                                <p>Data: {record.date.toLocaleDateString()}</p>
-                                <p>Carga Máxima: {record.maxLoad} kg</p>
-                                <button onClick={() => handleRemoveRecord(exercise.name, record.date)}>Remover Registro</button>
+                                <p>Date: {record.date.toLocaleDateString()}</p>
+                                <p>Maximum Load: {record.maxLoad} kg</p>
+                                <button onClick={() => handleRemoveRecord(exercise.name, record.date)}>Remove Record</button>
                             </div>
                         ))}
                         <RecordsGraph records={exerciseRecords} ></RecordsGraph>
-                        <button onClick={() => handleAddRecord(exercise.name)}>Add Registro</button>
+                        <button onClick={() => handleAddRecord(exercise.name)}>Add Record</button>
                     </div>
                 )}
             )}
