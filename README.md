@@ -2,7 +2,9 @@
 
 Gym Companion is my first project developed from scratch to practice React.
 
-This webapp helps users track their workout programs and exercise load progress, with the added feature of visualizing this progress through charts,.
+This webapp helps users track their workout programs and exercise load progress, with the added feature of visualizing this progress through charts.
+
+Since it's only for practing React, there's no real database. Instead, I decided to use [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
 
 ## Built with:
 

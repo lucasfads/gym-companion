@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout, Program } from '@/types';
 import { updateProgramInDB, fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
-import RecordsGraph from '@/src/components/records-graph';
+import ExercisesList from '@/src/components/exercises-list';
+
 
 const ProgramDetails = () => {
     const { workoutId, programId } = useParams();
@@ -120,40 +121,12 @@ const ProgramDetails = () => {
         <div>
             <h1>Program {program.id}</h1>
             <button onClick={handleAddExercise}>Add Exercise</button>
-            {program.exercises.map((exercise, index) => {
-                const exerciseRecords = exercise.records.slice(-6).map(record => {
-                    return {
-                        id: record.id,
-                        name: exercise.name,
-                        date: record.date.toLocaleDateString(),
-                        maxLoad: record.maxLoad
-                    };
-                });
-                return(
-                    <div key={index} className={styles.exercise}>
-                        <div className={styles.exerciseInfo}>
-                            <h2>{exercise.name}</h2>
-                            <p>Reps: {exercise.reps}</p>
-                            <button onClick={() => handleRemoveExercise(exercise.name)}>Remove Exercise</button>
-                            <button onClick={() => handleAddRecord(exercise.name)}>Add Record</button>
-                        </div>
-                        {/* {exercise.records.map((record, recordIndex) => (
-                            <div key={recordIndex}>
-                                <p>Date: {record.date.toLocaleDateString()}</p>
-                                <p>Maximum Load: {record.maxLoad} kg</p>
-                                <button onClick={() => handleRemoveRecord(exercise.name, record.id)}>Remove Record</button>
-                            </div>
-                        ))} */}
-                        <div className={styles.exerciseRecords}>
-                            <RecordsGraph
-                                records={exerciseRecords}
-                                onRemoveRecord={handleRemoveRecord}
-                                exerciseName={exercise.name}
-                            ></RecordsGraph>
-                        </div>
-                    </div>
-                )}
-            )}
+            <ExercisesList
+                exercises={program.exercises}
+                onRemoveExercise={handleRemoveExercise}
+                onAddRecord={handleAddRecord}
+                onRemoveRecord={handleRemoveRecord}
+            />
         </div>
     );
 };
