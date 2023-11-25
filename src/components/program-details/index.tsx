@@ -127,7 +127,8 @@ const ProgramDetails = () => {
             {program.exercises.map((exercise, index) => {
                 const exerciseRecords = exercise.records.map(record => {
                     return {
-                        date: record.date.toLocaleDateString(), // Converte a data para string
+                        name: exercise.name,
+                        date: record.date.toLocaleDateString(),
                         maxLoad: record.maxLoad
                     };
                 });
