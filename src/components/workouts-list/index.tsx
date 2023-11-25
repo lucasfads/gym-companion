@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
-import { addWorkout, removeWorkout, openDatabase } from '@/lib/indexed-db'
+import { addWorkout, removeWorkout, openDatabase } from '@/lib/indexed-db';
 import { Link } from 'react-router-dom';
+import { formatTimestamp } from '@/lib/utils';
 
 const getAllWorkouts = (db) => {
 	return new Promise((resolve, reject) => {
@@ -75,7 +76,7 @@ const WorkoutsList: React.FC = () => {
 			<div className={styles.workouts}>
 				{workouts.map((workout: Workout) => (
 					<div key={workout.id}>
-						<Link to={`/workout/${workout.id}`}>{workout.id}</Link>
+						<Link to={`/workout/${workout.id}`}>Workout started on {formatTimestamp(workout.id)}</Link>
 						<button onClick={() => handleRemoveWorkout(workout.id)}>REMOVE</button>
 					</div>
 				))}
