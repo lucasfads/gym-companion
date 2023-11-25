@@ -78,7 +78,7 @@ const ProgramsList: React.FC<ProgramsListProps> = ( {workoutId} ) => {
 				{programs.map((program: Program) => (
 					<div key={program.id}>
 						{/* <Link to={`/workout/${workout.id}`}>{workout.id}</Link> */}
-						<Link to={`/workout/${workoutId}/program/${program.id}`}>{program.id}</Link>
+						<Link to={`/workout/${workoutId}/program/${program.id}`}>Program {program.id}</Link>
 						<button onClick={() => handleRemoveProgram(program.id)}>REMOVE</button>
 					</div>
 				))}
