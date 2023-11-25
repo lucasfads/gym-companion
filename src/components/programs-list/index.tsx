@@ -68,18 +68,18 @@ const ProgramsList: React.FC<ProgramsListProps> = ( {workoutId} ) => {
     }
 
     if (!programs || programs.length === 0) {
-        return <div>No program found. <button onClick={handleAddProgram}>ADD Program</button></div>;
+        return <div>No program found. <button onClick={handleAddProgram}>Add Program</button></div>;
     }
 
     return (
 		<div>
-			<button onClick={handleAddProgram}>ADD Program</button>
+			<button onClick={handleAddProgram}>Add Program</button>
 			<div className={styles.programs}>
 				{programs.map((program: Program) => (
 					<div key={program.id}>
 						{/* <Link to={`/workout/${workout.id}`}>{workout.id}</Link> */}
 						<Link to={`/workout/${workoutId}/program/${program.id}`}>Program {program.id}</Link>
-						<button onClick={() => handleRemoveProgram(program.id)}>REMOVE</button>
+						<button onClick={() => handleRemoveProgram(program.id)}>Remove</button>
 					</div>
 				))}
 			</div>
