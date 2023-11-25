@@ -133,7 +133,7 @@ const ProgramDetails = () => {
                     };
                 });
                 return(
-                    <div key={index}>
+                    <div key={index} className={styles.exercise}>
                         <h2>{exercise.name}</h2>
                         <p>Reps: {exercise.reps}</p>
                         <button onClick={() => handleRemoveExercise(exercise.name)}>Remove Exercise</button>
