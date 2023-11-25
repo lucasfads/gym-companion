@@ -74,7 +74,7 @@ const WorkoutsList: React.FC = () => {
 		<div>
 			<button onClick={handleAddWorkout}>ADD</button>
 			<div className={styles.workouts}>
-				{workouts.map((workout: Workout) => (
+				{workouts.slice(0).reverse().map((workout: Workout) => (
 					<div key={workout.id}>
 						<Link to={`/workout/${workout.id}`}>Workout started on {formatTimestamp(workout.id)}</Link>
 						<button onClick={() => handleRemoveWorkout(workout.id)}>REMOVE</button>
