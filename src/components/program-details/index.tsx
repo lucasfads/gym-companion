@@ -131,9 +131,12 @@ const ProgramDetails = () => {
                 });
                 return(
                     <div key={index} className={styles.exercise}>
-                        <h2>{exercise.name}</h2>
-                        <p>Reps: {exercise.reps}</p>
-                        <button onClick={() => handleRemoveExercise(exercise.name)}>Remove Exercise</button>
+                        <div className={styles.exerciseInfo}>
+                            <h2>{exercise.name}</h2>
+                            <p>Reps: {exercise.reps}</p>
+                            <button onClick={() => handleRemoveExercise(exercise.name)}>Remove Exercise</button>
+                            <button onClick={() => handleAddRecord(exercise.name)}>Add Record</button>
+                        </div>
                         {/* {exercise.records.map((record, recordIndex) => (
                             <div key={recordIndex}>
                                 <p>Date: {record.date.toLocaleDateString()}</p>
@@ -141,12 +144,13 @@ const ProgramDetails = () => {
                                 <button onClick={() => handleRemoveRecord(exercise.name, record.id)}>Remove Record</button>
                             </div>
                         ))} */}
-                        <RecordsGraph
-                            records={exerciseRecords}
-                            onRemoveRecord={handleRemoveRecord}
-                            exerciseName={exercise.name}
-                        ></RecordsGraph>
-                        <button onClick={() => handleAddRecord(exercise.name)}>Add Record</button>
+                        <div className={styles.exerciseRecords}>
+                            <RecordsGraph
+                                records={exerciseRecords}
+                                onRemoveRecord={handleRemoveRecord}
+                                exerciseName={exercise.name}
+                            ></RecordsGraph>
+                        </div>
                     </div>
                 )}
             )}
