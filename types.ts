@@ -15,6 +15,7 @@ export interface Exercise {
 }
 
 export interface Record {
-    date: Date;
+    id: number
+	date: Date;
     maxLoad: number;
 }

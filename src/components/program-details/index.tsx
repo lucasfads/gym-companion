@@ -76,6 +76,7 @@ const ProgramDetails = () => {
         }
     
         const newRecord = {
+            id: Date.now(),
             date: date,
             maxLoad: maxLoad
         };
@@ -95,19 +96,14 @@ const ProgramDetails = () => {
     };
     
 
-    const handleRemoveRecord = (exerciseName, recordDate) => {
-        const dateToRemove = typeof recordDate === 'string' ? new Date(recordDate) : recordDate;
-    
+    const handleRemoveRecord = (exerciseName, recordId) => {
         const updatedExercises = program.exercises.map(exercise => {
             if (exercise.name === exerciseName) {
-                const updatedRecords = exercise.records.filter(record => 
-                    record.date.getTime() !== dateToRemove.getTime()
-                );
+                const updatedRecords = exercise.records.filter(record => record.id !== recordId);
                 return { ...exercise, records: updatedRecords };
             }
             return exercise;
         });
-    
         const updatedProgram = { ...program, exercises: updatedExercises };
         
         setProgram(updatedProgram);
@@ -127,6 +123,7 @@ const ProgramDetails = () => {
             {program.exercises.map((exercise, index) => {
                 const exerciseRecords = exercise.records.map(record => {
                     return {
+                        id: record.id,
                         name: exercise.name,
                         date: record.date.toLocaleDateString(),
                         maxLoad: record.maxLoad
@@ -141,10 +138,14 @@ const ProgramDetails = () => {
                             <div key={recordIndex}>
                                 <p>Date: {record.date.toLocaleDateString()}</p>
                                 <p>Maximum Load: {record.maxLoad} kg</p>
-                                <button onClick={() => handleRemoveRecord(exercise.name, record.date)}>Remove Record</button>
+                                <button onClick={() => handleRemoveRecord(exercise.name, record.id)}>Remove Record</button>
                             </div>
                         ))}
-                        <RecordsGraph records={exerciseRecords} ></RecordsGraph>
+                        <RecordsGraph
+                            records={exerciseRecords}
+                            onRemoveRecord={handleRemoveRecord}
+                            exerciseName={exercise.name}
+                        ></RecordsGraph>
                         <button onClick={() => handleAddRecord(exercise.name)}>Add Record</button>
                     </div>
                 )}

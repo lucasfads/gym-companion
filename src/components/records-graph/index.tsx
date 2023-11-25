@@ -1,7 +1,19 @@
 import React, { PureComponent } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Dot } from 'recharts';
 
-const RecordsGraph: React.FC = ({ records }) => {
+const CustomDot = (props) => {
+    const { cx, cy, payload, onRemoveRecord, exerciseName } = props;
+
+    const handleClick = () => {
+        console.log(payload)
+        onRemoveRecord(exerciseName, payload.id);
+    };
+
+    return <Dot cx={cx} cy={cy} r={8} onClick={handleClick} />;
+};
+
+
+const RecordsGraph: React.FC = ({ records, onRemoveRecord, exerciseName }) => {
     return (
         <LineChart
             width={500}
@@ -16,7 +28,12 @@ const RecordsGraph: React.FC = ({ records }) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="maxLoad" stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Line 
+                type="monotone" 
+                dataKey="maxLoad" 
+                stroke="#8884d8" 
+                activeDot={<CustomDot onRemoveRecord={onRemoveRecord} exerciseName={exerciseName} />}
+            />
         </LineChart>
     );
 
