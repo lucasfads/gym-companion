@@ -121,7 +121,7 @@ const ProgramDetails = () => {
             <h1>Program {program.id}</h1>
             <button onClick={handleAddExercise}>Add Exercise</button>
             {program.exercises.map((exercise, index) => {
-                const exerciseRecords = exercise.records.map(record => {
+                const exerciseRecords = exercise.records.slice(-6).map(record => {
                     return {
                         id: record.id,
                         name: exercise.name,
