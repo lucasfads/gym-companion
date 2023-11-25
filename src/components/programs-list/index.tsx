@@ -68,12 +68,12 @@ const ProgramsList: React.FC<ProgramsListProps> = ( {workoutId} ) => {
     }
 
     if (!programs || programs.length === 0) {
-        return <div>No program found.<button onClick={handleAddProgram}>ADD</button></div>;
+        return <div>No program found. <button onClick={handleAddProgram}>ADD Program</button></div>;
     }
 
     return (
 		<div>
-			<button onClick={handleAddProgram}>ADD</button>
+			<button onClick={handleAddProgram}>ADD Program</button>
 			<div className={styles.programs}>
 				{programs.map((program: Program) => (
 					<div key={program.id}>

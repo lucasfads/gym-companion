@@ -67,12 +67,12 @@ const WorkoutsList: React.FC = () => {
     }
 
     if (!workouts || workouts.length === 0) {
-        return <div>No workout found.<button onClick={handleAddWorkout}>ADD</button></div>;
+        return <div>No workout found. <button onClick={handleAddWorkout}>ADD Workout</button></div>;
     }
 
     return (
 		<div>
-			<button onClick={handleAddWorkout}>ADD</button>
+			<button onClick={handleAddWorkout}>ADD Workout</button>
 			<div className={styles.workouts}>
 				{workouts.slice(0).reverse().map((workout: Workout) => (
 					<div key={workout.id}>
