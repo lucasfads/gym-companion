@@ -14,7 +14,7 @@ const ProgramDetails = () => {
         const fetchProgramDetails = async () => {
             try {
                 if (workoutId !== undefined) {
-                    const workoutData = await fetchWorkoutDetailsFromDB(workoutId);
+                    const workoutData = await fetchWorkoutDetailsFromDB(parseInt(workoutId as string));
                     setWorkout(workoutData);
             
                     const programData = workoutData.programs.find(program => program.id === parseInt(programId as string, 10));

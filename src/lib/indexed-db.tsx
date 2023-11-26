@@ -88,13 +88,14 @@ export const removeWorkout = (db: IDBDatabase, workoutId : number) => {
 	  console.log("Erro ao remover workout ao banco de dados", event);
 	};
 }
-export const fetchWorkoutDetailsFromDB = async (id: number | string): Promise<Workout> => {
+
+export const fetchWorkoutDetailsFromDB = async (id: number): Promise<Workout> => {
 	const db: IDBDatabase = await openDatabase();
 	return new Promise((resolve, reject) => {
 	  const transaction = db.transaction(["workouts"], "readonly");
 	  const store = transaction.objectStore("workouts");
 	  const request = store.get(id);
-  
+
 	  request.onsuccess = () => resolve(request.result);
 	  request.onerror = () => reject(request.error);
 	});

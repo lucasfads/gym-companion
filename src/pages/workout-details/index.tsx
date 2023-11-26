@@ -11,7 +11,7 @@ const WorkoutDetails: React.FC = () => {
 
 	useEffect(() => {
         const fetchWorkoutDetails = async () => {
-			const data = await fetchWorkoutDetailsFromDB(workoutId as string);
+			const data = await fetchWorkoutDetailsFromDB(parseInt(workoutId as string));
             setWorkout(data);
         };
 
