@@ -1,10 +1,10 @@
 import { Workout, Program } from "@/types";
 
 let db: IDBDatabase;
-const request = window.indexedDB.open("myDatabase", 1);
+const request = window.indexedDB.open("MyWorkoutsDatabase", 1);
 
 request.onerror = function(event) {
-  console.log("Erro ao abrir o banco de dados", event);
+  console.log("Error opening the database", event);
 };
 
 request.onsuccess = function(event) {
@@ -22,12 +22,12 @@ export const openDatabase = (): Promise<IDBDatabase> => {
         const request = window.indexedDB.open("MyWorkoutsDatabase", 1);
 
         request.onerror = (event) => {
-            console.error("Erro ao abrir o banco de dados IndexedDB", event);
+            console.error("Error opening the IndexedDB database", event);
             reject((event.target as IDBRequest).error);
         };
 
         request.onsuccess = (event) => {
-            console.log("Banco de dados IndexedDB aberto com sucesso");
+            console.log("IndexedDB database successfully opened");
             resolve((event.target as IDBRequest).result);
         };
 
@@ -52,11 +52,11 @@ export const addWorkout = (db: IDBDatabase) => {
 	const request = store.add(newWorkout);
   
 	request.onsuccess = function() {
-	  console.log("Workout adicionado ao banco de dados");
+	  console.log("Workout added to the database");
 	};
   
 	request.onerror = function(event) {
-	  console.log("Erro ao adicionar workout ao banco de dados", event);
+	  console.log("Error adding workout to the database", event);
 	};
 }
 
@@ -66,11 +66,11 @@ export const getWorkout = (id: number) => {
 	const request = store.get(id);
   
 	request.onsuccess = function(event) {
-	  console.log("Workout recebido:", (event.target as IDBRequest).result);
+	  console.log("Workout received:", (event.target as IDBRequest).result);
 	};
   
 	request.onerror = function(event) {
-	  console.log("Erro ao obter workout do banco de dados", event);
+	  console.log("Error fetching workout from the database", event);
 	};
 }
 
@@ -81,11 +81,11 @@ export const removeWorkout = (db: IDBDatabase, workoutId : number) => {
   const request = store.delete(workoutId);
   
 	request.onsuccess = function() {
-	  console.log("Workout removido ao banco de dados");
+	  console.log("Workout removed from the database");
 	};
   
 	request.onerror = function(event) {
-	  console.log("Erro ao remover workout ao banco de dados", event);
+	  console.log("Error removing workout from the database", event);
 	};
 }
 
@@ -117,7 +117,7 @@ export const addPrograms = async (workoutId: number, newProgram: Program) => {
     };
 
     workoutRequest.onerror = (event) => {
-        console.log("Erro ao buscar workout", (event.target as IDBRequest).error);
+        console.log("Error searching for workout", (event.target as IDBRequest).error);
     };
 };
 
@@ -138,7 +138,7 @@ export const removeProgram = async (workoutId : number, programId : number) => {
     };
 
     workoutRequest.onerror = (event) => {
-        console.log("Erro ao buscar workout", (event.target as IDBRequest).error);
+        console.log("Error searching for workout", (event.target as IDBRequest).error);
     };
 };
 
@@ -161,15 +161,15 @@ export const updateProgramInDB = async (workoutId : number, updatedProgram : Pro
   };
 
   workoutRequest.onerror = (event) => {
-      console.log("Erro ao buscar workout", (event.target as IDBRequest).error);
+      console.log("Error searching for workout", (event.target as IDBRequest).error);
   };
 
   transaction.oncomplete = () => {
-      console.log("Programa atualizado com sucesso no IndexedDB.");
+      console.log("Program successfully updated in IndexedDB.");
   };
 
   transaction.onerror = (event) => {
-      console.log("Erro ao atualizar programa no IndexedDB", (event.target as IDBRequest).error);
+      console.log("Error updating program in IndexedDB", (event.target as IDBRequest).error);
   };
 };
 
