@@ -2,7 +2,7 @@
 
 Gym Companion is my first project developed from scratch to practice React.
 
-This webapp helps users track their workout programs and exercise load progress, with the added feature of visualizing this progress through charts.
+This web app helps users track their workout programs and exercise load progress, with the added feature of visualizing this progress through charts.
 
 Since it's only for practing React, there's no real database. Instead, I decided to use [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API).
 
@@ -35,3 +35,7 @@ npm install
 npm run dev
 ```
 This will lauch the app in development mode, ready for use and exploration.
+
+## Live version
+
+You can see and test a live version of the web app runnin [here, on Github Pages](https://lucasfads.github.io/gym-companion/).
