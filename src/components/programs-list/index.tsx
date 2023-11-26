@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { Program } from '@/types';
-import { addPrograms, removeProgram, openDatabase } from '@/lib/indexed-db'
+import { addPrograms, removeProgram, openDatabase } from '@/src/lib/indexed-db'
 import { Link } from 'react-router-dom';
 
 const getWorkoutById = async (db, id) => {

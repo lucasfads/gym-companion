@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './styles.module.css';
 import { Workout, Program } from '@/types';
-import { updateProgramInDB, fetchWorkoutDetailsFromDB } from '@/lib/indexed-db';
+import { updateProgramInDB, fetchWorkoutDetailsFromDB } from '@/src/lib/indexed-db';
 import ExercisesList from '@/src/components/exercises-list';
 
 

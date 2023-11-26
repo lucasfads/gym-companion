@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { Workout } from '@/types';
-import { addWorkout, removeWorkout, openDatabase } from '@/lib/indexed-db';
+import { addWorkout, removeWorkout, openDatabase } from '@/src/lib/indexed-db';
 import { Link } from 'react-router-dom';
-import { formatTimestamp } from '@/lib/utils';
+import { formatTimestamp } from '@/src/lib/utils';
 
 const getAllWorkouts = (db) => {
 	return new Promise((resolve, reject) => {
