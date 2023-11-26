@@ -11,5 +11,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, './')
     },
   },
-  base: "/gym-companion"
+  // base: "/gym-companion"
 })
