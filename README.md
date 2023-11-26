@@ -38,4 +38,4 @@ This will lauch the app in development mode, ready for use and exploration.
 
 ## Live version
 
-You can see and test a live version of the web app runnin [here, on Github Pages](https://lucasfads.github.io/gym-companion/).
+You can see and test a live version of the web app running [here, on Github Pages](https://lucasfads.github.io/gym-companion/).
