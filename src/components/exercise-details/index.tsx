@@ -22,8 +22,10 @@ const ExerciseDetails: React.FC<ExerciseDetailsProps> = ({ exercise, onRemoveExe
             <div className={styles.exerciseInfo}>
                 <h2>{exercise.name}</h2>
                 <p>Reps: {exercise.reps}</p>
-                <button onClick={() => onRemoveExercise(exercise.name)}>Remove Exercise</button>
-                <button onClick={() => onAddRecord(exercise.name)}>Add Record</button>
+                <div className={styles.buttonsWrapper}>
+                    <button onClick={() => onRemoveExercise(exercise.name)}>Remove Exercise</button>
+                    <button onClick={() => onAddRecord(exercise.name)}>Add Record</button>
+                </div>
             </div>
             <div className={styles.exerciseRecords}>
                 <RecordsGraph
