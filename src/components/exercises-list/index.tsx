@@ -1,10 +1,17 @@
 import ExerciseDetails from '@/src/components/exercise-details';
-import styles from './styles.module.css';
+import { Exercise, RemoveExerciseHandler, AddRecordHandler, RemoveRecordHandler } from "@/types";
 
-const ExercisesList = ({ exercises, onRemoveExercise, onAddRecord, onRemoveRecord }) => {
+interface ExercisesListProps {
+    exercises: Exercise[];
+    onRemoveExercise: RemoveExerciseHandler;
+    onAddRecord: AddRecordHandler;
+    onRemoveRecord: RemoveRecordHandler;
+}
+
+const ExercisesList: React.FC<ExercisesListProps>  = ({ exercises, onRemoveExercise, onAddRecord, onRemoveRecord }) => {
     return (
         <div>
-            {exercises.map((exercise, index) => (
+            {exercises.map((exercise: Exercise, index: number) => (
                 <ExerciseDetails
                     key={index}
                     exercise={exercise}

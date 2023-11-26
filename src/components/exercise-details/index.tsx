@@ -1,7 +1,15 @@
 import RecordsGraph from '@/src/components/records-graph';
 import styles from './styles.module.css';
+import { Exercise, RemoveExerciseHandler, AddRecordHandler, RemoveRecordHandler } from "@/types";
 
-const ExerciseDetails = ({ exercise, onRemoveExercise, onAddRecord, onRemoveRecord }) => {
+interface ExerciseDetailsProps {
+    exercise: Exercise;
+    onRemoveExercise: RemoveExerciseHandler;
+    onAddRecord: AddRecordHandler;
+    onRemoveRecord: RemoveRecordHandler;
+}
+
+const ExerciseDetails: React.FC<ExerciseDetailsProps> = ({ exercise, onRemoveExercise, onAddRecord, onRemoveRecord }) => {
     const exerciseRecords = exercise.records.slice(-6).map(record => ({
         id: record.id,
         name: exercise.name,

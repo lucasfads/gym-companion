@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import './App.css'
 
 import WorkoutsList from '@/src/pages/workouts-list';

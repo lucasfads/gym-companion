@@ -1,24 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './styles.module.css';
-import { Workout, Program } from '@/types';
+import { Workout, Program, Exercise } from '@/types';
 import { updateProgramInDB, fetchWorkoutDetailsFromDB } from '@/src/lib/indexed-db';
 import ExercisesList from '@/src/components/exercises-list';
 
 
 const ProgramDetails = () => {
     const { workoutId, programId } = useParams();
-    const [workout, setWorkout] = useState<Workout>();
+    const [_workout, setWorkout] = useState<Workout>();
     const [program, setProgram] = useState<Program>();
 
     useEffect(() => {
         const fetchProgramDetails = async () => {
             try {
-                const workoutData = await fetchWorkoutDetailsFromDB(workoutId);
-                setWorkout(workoutData);
-        
-                const programData = workoutData.programs.find(program => program.id === parseInt(programId, 10));
-                setProgram(programData);
+                if (workoutId !== undefined) {
+                    const workoutData = await fetchWorkoutDetailsFromDB(workoutId);
+                    setWorkout(workoutData);
+            
+                    const programData = workoutData.programs.find(program => program.id === parseInt(programId as string, 10));
+                    setProgram(programData);
+                }
             } catch (err) {
                 console.error("Error searching for the program details", err);
             }
@@ -39,38 +40,44 @@ const ProgramDetails = () => {
             return;
         }
 
-        const newExercise = {
+        const newExercise: Exercise = {
             name: exerciseName,
             reps: reps,
             records: []
         };
         
-        const updatedExercises = [...program.exercises, newExercise];
+        const updatedExercises: Exercise[] = [...(program?.exercises || []), newExercise];
     
-        const updatedProgram = { ...program, exercises: updatedExercises };
+        if (program?.id !== undefined) {
+            const updatedProgram: Program = { ...program, exercises: updatedExercises };
         
-        setProgram(updatedProgram);
-    
-        updateProgramInDB(parseInt(workoutId, 10), updatedProgram);
+            setProgram(updatedProgram);
+            
+            updateProgramInDB(parseInt(workoutId as string, 10), updatedProgram);
+        }
     };
     
 
-    const handleRemoveExercise = async (exerciseName) => {
-        const updatedExercises = program.exercises.filter(exercise => exercise.name !== exerciseName);
+    const handleRemoveExercise = async (exerciseName: string) => {
+        const updatedExercises: Exercise[] = program?.exercises.filter(exercise => exercise.name !== exerciseName) || [];
         
-        const updatedProgram = { ...program, exercises: updatedExercises };
+        if (program?.id !== undefined) {
+            const updatedProgram: Program = { ...program, exercises: updatedExercises };
         
-        setProgram(updatedProgram);
+            setProgram(updatedProgram);
         
-        updateProgramInDB(parseInt(workoutId, 10), updatedProgram);
+            updateProgramInDB(parseInt(workoutId as string, 10), updatedProgram);
+        }
     };
     
 
-    const handleAddRecord = (exerciseName) => {
+    const handleAddRecord = (exerciseName: string) => {
         const date = new Date();
         
-        const maxLoadString = prompt("Enter the maximum load (kg):");
-        const maxLoad = parseFloat(maxLoadString);
+        const maxLoadString: string | null = prompt("Enter the maximum load (kg):");
+        let maxLoad: number = 0;
+        if (maxLoadString)
+             maxLoad = parseFloat(maxLoadString);
         if (isNaN(maxLoad) || maxLoad <= 0) {
             alert("Invalid maximum load.");
             return;
@@ -82,34 +89,39 @@ const ProgramDetails = () => {
             maxLoad: maxLoad
         };
     
-        const updatedExercises = program.exercises.map(exercise => {
+        const updatedExercises = program?.exercises.map(exercise => {
             if (exercise.name === exerciseName) {
                 return { ...exercise, records: [...exercise.records, newRecord] };
             }
             return exercise;
-        });
+        }) || [];
 
-        const updatedProgram = { ...program, exercises: updatedExercises };
-        
-        setProgram(updatedProgram);
-        
-        updateProgramInDB(parseInt(workoutId, 10), updatedProgram);        
+        if (program?.id !== undefined) {
+            const updatedProgram = { ...program, exercises: updatedExercises };
+            
+            setProgram(updatedProgram);
+            
+            updateProgramInDB(parseInt(workoutId as string, 10), updatedProgram);
+        }
     };
     
 
-    const handleRemoveRecord = (exerciseName, recordId) => {
-        const updatedExercises = program.exercises.map(exercise => {
+    const handleRemoveRecord = (exerciseName: string, recordId: number) => {
+        const updatedExercises = program?.exercises.map(exercise => {
             if (exercise.name === exerciseName) {
                 const updatedRecords = exercise.records.filter(record => record.id !== recordId);
                 return { ...exercise, records: updatedRecords };
             }
             return exercise;
-        });
-        const updatedProgram = { ...program, exercises: updatedExercises };
+        }) || [];
+
+        if (program?.id !== undefined) {
+            const updatedProgram = { ...program, exercises: updatedExercises };
         
-        setProgram(updatedProgram);
+            setProgram(updatedProgram);
         
-        updateProgramInDB(parseInt(workoutId, 10), updatedProgram);
+            updateProgramInDB(parseInt(workoutId as string, 10), updatedProgram);
+        }
     };
     
 

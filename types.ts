@@ -10,7 +10,7 @@ export interface Program {
 
 export interface Exercise {
     name: string;
-    reps: number;
+    reps: string;
 	records: Record[];
 }
 
@@ -19,3 +19,8 @@ export interface Record {
 	date: Date;
     maxLoad: number;
 }
+
+
+export type RemoveExerciseHandler = (exerciseName: string) => void;
+export type AddRecordHandler = (exerciseName: string) => void;
+export type RemoveRecordHandler = (exerciseName: string, recordId: number) => void;

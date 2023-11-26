@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './styles.module.css';
 import { Workout } from '@/types';
 import { fetchWorkoutDetailsFromDB } from '@/src/lib/indexed-db';
 import ProgramsList from '@/src/components/programs-list';
@@ -12,7 +11,7 @@ const WorkoutDetails: React.FC = () => {
 
 	useEffect(() => {
         const fetchWorkoutDetails = async () => {
-			const data = await fetchWorkoutDetailsFromDB(workoutId);
+			const data = await fetchWorkoutDetailsFromDB(workoutId as string);
             setWorkout(data);
         };
 

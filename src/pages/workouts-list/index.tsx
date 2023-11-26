@@ -5,7 +5,7 @@ import { addWorkout, removeWorkout, openDatabase } from '@/src/lib/indexed-db';
 import { Link } from 'react-router-dom';
 import { formatTimestamp } from '@/src/lib/utils';
 
-const getAllWorkouts = (db) => {
+const getAllWorkouts = (db: IDBDatabase): Promise<Workout[]> => {
 	return new Promise((resolve, reject) => {
 	  const transaction = db.transaction(["workouts"], "readonly");
 	  const store = transaction.objectStore("workouts");
@@ -18,18 +18,18 @@ const getAllWorkouts = (db) => {
 
 const WorkoutsList: React.FC = () => {
     const [workouts, setWorkouts] = useState<Workout[]>([]);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
 	const handleAddWorkout = async () => {
 		try {
 			const db = await openDatabase();
 			await addWorkout(db);
 			
-			const allWorkouts = await getAllWorkouts(db);
+			const allWorkouts: Workout[] = await getAllWorkouts(db);
 			setWorkouts(allWorkouts);
 		} catch (err) {
 			console.error("Error adding workout", err);
-			setError(err);
+			setError(err as string);
 		}
 	};
 
@@ -42,7 +42,7 @@ const WorkoutsList: React.FC = () => {
 			setWorkouts(allWorkouts);
 		} catch (err) {
 			console.error("Error removing workout", err);
-			setError(err);
+			setError(err as string);
 		}
 	};
 	
@@ -54,8 +54,7 @@ const WorkoutsList: React.FC = () => {
                 const allWorkouts = await getAllWorkouts(db);
                 setWorkouts(allWorkouts);
             } catch (err) {
-                console.log(err);
-                setError(err);
+                setError(err as string);
             }
         };
 
